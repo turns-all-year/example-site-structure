@@ -1,0 +1,39 @@
+version: '3'
+services:
+  frontend:
+    build:
+      context: node/
+    image: turnsallyear/node:dev1
+    environment:
+      FOO: bar
+      discovery.host: consul.consul
+      discovery.port: 8500
+    ports:
+    - 6000:6000
+    stdin_open: true
+    tty: true
+  cache:
+    build:
+      context: redis/
+    image: turnsallyear/redis:dev1
+    environment:
+      FOO: bar
+      discovery.host: consul.consul
+      discovery.port: 8500
+    ports:
+    - 6379:6379
+    stdin_open: true
+    tty: true
+  db:
+    build:
+      context: mongo/
+    image: turnsallyear/mongo:dev1
+    environment:
+      FOO: bar
+      discovery.host: consul.consul
+      discovery.port: 8500
+    ports:
+    - 27017:27017
+    - 28017:28017
+    stdin_open: true
+    tty: true
